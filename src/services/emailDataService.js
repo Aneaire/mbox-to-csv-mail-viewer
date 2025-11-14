@@ -15,6 +15,30 @@ export class EmailDataService {
       return this.loadEmailsFromMockCSV();
     }
   }
+
+  static async loadEmailsFromFile(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      
+      reader.onload = (e) => {
+        try {
+          const csvText = e.target.result;
+          const emails = CSVParser.parseCSV(csvText);
+          console.log(`Loaded ${emails.length} emails from uploaded file: ${file.name}`);
+          resolve(emails);
+        } catch (error) {
+          console.error('Error parsing uploaded CSV:', error);
+          reject(error);
+        }
+      };
+      
+      reader.onerror = () => {
+        reject(new Error('Failed to read file'));
+      };
+      
+      reader.readAsText(file);
+    });
+  }
   
   static async loadEmailsFromMockCSV() {
     // For development, we'll create mock data based on the CSV structure

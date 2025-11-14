@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader } from '../components/ui/card.js';
 import { Button } from '../components/ui/button.js';
-import { Mail, Star, Archive, Trash2, Search } from 'lucide-react';
+import { Mail, Star, Archive, Trash2, Search, Upload } from 'lucide-react';
 
 interface EmailListProps {
   emails: any[];
   selectedEmail: any | null;
   onEmailSelect: (email) => void;
   onMarkAsRead: (emailId: string) => void;
+  onUploadClick?: () => void;
 }
 
-export function EmailList({ emails, selectedEmail, onEmailSelect, onMarkAsRead }: EmailListProps) {
+export function EmailList({ emails, selectedEmail, onEmailSelect, onMarkAsRead, onUploadClick }: EmailListProps) {
   const [sortBy, setSortBy] = useState<'date' | 'sender' | 'subject'>('date');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -63,6 +64,17 @@ export function EmailList({ emails, selectedEmail, onEmailSelect, onMarkAsRead }
             <Mail className="h-5 w-5 text-blue-500" />
             Inbox ({filteredEmails.length}/{emails.length})
           </h2>
+          {onUploadClick && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onUploadClick}
+              className="flex items-center gap-2"
+            >
+              <Upload className="h-4 w-4" />
+              Upload
+            </Button>
+          )}
         </div>
         
         {/* Search Bar */}
