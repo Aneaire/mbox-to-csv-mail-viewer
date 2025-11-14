@@ -9,23 +9,11 @@ import { EmailDataService } from './services/emailDataService.js';
 function App() {
   const [emails, setEmails] = useState([]);
   const [selectedEmail, setSelectedEmail] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [showUpload, setShowUpload] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showUpload, setShowUpload] = useState(true);
 
   useEffect(() => {
-    const loadEmails = async () => {
-      try {
-        setLoading(true);
-        const emailData = await EmailDataService.loadEmailsFromCSV();
-        setEmails(emailData);
-      } catch (error) {
-        console.error('Failed to load emails:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadEmails();
+    // Don't auto-load emails on startup - wait for user upload
   }, []);
 
   const handleEmailSelect = (email) => {
@@ -92,22 +80,22 @@ function App() {
         <div className="flex-1 flex items-center justify-center p-8">
           <div className="w-full max-w-2xl">
             <div className="text-center mb-8">
-              <Upload className="mx-auto h-16 w-16 text-blue-500 mb-4" />
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                Upload CSV File
+              <Upload className="mx-auto h-20 w-20 text-blue-500 mb-6" />
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                Email Viewer
+              </h1>
+              <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                Upload CSV File to Get Started
               </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                Upload a CSV file containing email data to view and analyze
+              <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+                Upload a CSV file containing your email data to view, search, and analyze your emails with AI-powered insights.
               </p>
             </div>
             <FileUpload onFileUpload={handleFileUpload} />
-            <div className="mt-6 text-center">
-              <button
-                onClick={handleHideUpload}
-                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
-              >
-                Cancel
-              </button>
+            <div className="mt-8 text-center">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Supported format: CSV files with email data
+              </p>
             </div>
           </div>
         </div>
@@ -130,23 +118,11 @@ function App() {
             <div className="text-center">
               <Mail className="mx-auto h-16 w-16 text-gray-300 dark:text-gray-600 mb-4" />
               <h3 className="text-lg font-medium text-gray-600 dark:text-gray-400 mb-2">
-                {emails.length === 0 ? 'No Emails Found' : 'Select an Email'}
+                Select an Email
               </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-500 mb-4">
-                {emails.length === 0 
-                  ? 'No email data could be loaded. Please check the CSV file.'
-                  : 'Choose an email from the list to view its details'
-                }
+              <p className="text-sm text-gray-500 dark:text-gray-500">
+                Choose an email from the list to view its details
               </p>
-              {emails.length === 0 && (
-                <button
-                  onClick={handleShowUpload}
-                  className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  <Upload className="h-4 w-4 mr-2" />
-                  Upload CSV File
-                </button>
-              )}
             </div>
           </div>
         </div>
