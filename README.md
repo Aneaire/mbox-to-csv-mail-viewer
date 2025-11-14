@@ -7,13 +7,43 @@ A modern email viewer application built with Vite, React, Tailwind CSS, and shad
 - **Email List View**: Browse emails with sorting options (date, sender, subject)
 - **Email Detail View**: Read individual emails with metadata
 - **AI Processing**: Use Gemini AI to process email bodies and extract key information
-- **CSV Integration**: Load real email data from CSV exports
-- **Search & Filter**: Real-time search across sender, subject, and body content
+- **CSV Upload**: Drag-and-drop CSV file upload with validation
+- **Real-time Search**: Filter across sender, subject, and body content
 - **Clean UI**: Modern interface with Tailwind CSS and shadcn/ui
 - **Responsive Design**: Works well on different screen sizes
 - **Email Categories**: Color-coded categories (work, personal, promotion, social)
 - **Attachment Indicators**: Visual indicators for emails with attachments
 - **Loading States**: Professional loading animations and error handling
+
+## CSV Upload Feature
+
+The application now supports **dynamic CSV file upload** with:
+
+### 📁 Upload Methods
+- **Drag & Drop**: Simply drag CSV files onto the upload area
+- **File Browser**: Click "Browse Files" to select CSV from your computer
+- **File Validation**: Ensures only CSV files are accepted
+- **Error Handling**: Graceful error messages for invalid files
+
+### 📊 Supported CSV Format
+The app expects CSV files with the following columns:
+- `From`: Sender name and email
+- `To`: Recipient email
+- `CC`: CC recipients
+- `BCC`: BCC recipients
+- `Subject`: Email subject
+- `Date`: Email timestamp
+- `Message-ID`: Unique message identifier
+- `Content-Type`: Email content type
+- `Body`: Email body content
+- `Attachments`: Attachment information
+
+### 🔄 Processing Pipeline
+1. **File Upload**: User selects or drops CSV file
+2. **CSV Parsing**: Smart parsing with HTML sanitization
+3. **Data Transformation**: Converts to email objects with metadata
+4. **AI Processing**: Optional AI content extraction
+5. **Display**: Shows in email list with search and filtering
 
 ## Tech Stack
 
@@ -72,16 +102,41 @@ The app includes a mock Gemini service that simulates AI processing without requ
 
 ## CSV Integration
 
-The application automatically loads email data from:
-```
-Email_Export_nikos_kevin_Nov_3,_2025_to_Nov_10,_2025_filtered.csv
-```
+The application supports **dynamic CSV file upload** with:
 
-Place your CSV file in `public/` directory and the app will parse and display:
-- Email metadata (sender, subject, date, attachments)
-- Cleaned email body (HTML tags removed)
-- Automatic categorization based on content
-- Attachment indicators
+### 📁 Upload Methods
+- **Drag & Drop**: Simply drag CSV files onto the upload area
+- **File Browser**: Click "Browse Files" to select CSV from your computer
+- **File Validation**: Ensures only CSV files are accepted
+- **Error Handling**: Graceful error messages for invalid files
+
+### 📊 Supported CSV Format
+The app expects CSV files with the following columns:
+- `From`: Sender name and email
+- `To`: Recipient email
+- `CC`: CC recipients
+- `BCC`: BCC recipients
+- `Subject`: Email subject
+- `Date`: Email timestamp
+- `Message-ID`: Unique message identifier
+- `Content-Type`: Email content type
+- `Body`: Email body content
+- `Attachments`: Attachment information
+
+### 🔄 Processing Pipeline
+1. **File Upload**: User selects or drops CSV file
+2. **CSV Parsing**: Smart parsing with HTML sanitization
+3. **Data Transformation**: Converts to email objects with metadata
+4. **AI Processing**: Optional AI content extraction
+5. **Display**: Shows in email list with search and filtering
+
+### 📋 Features
+- **Email metadata** (sender, subject, date, attachments)
+- **Cleaned email body** (HTML tags removed)
+- **Automatic categorization** based on content
+- **Attachment indicators** for emails with files
+- **Real-time search** across all email content
+- **Loading states** with progress indicators
 
 ### CSV Format
 
@@ -99,12 +154,13 @@ The app expects CSV files with the following columns:
 
 ## Usage
 
-1. **Browse Emails**: View the list of emails loaded from your CSV file
-2. **Search Emails**: Use the search bar to filter emails by sender, subject, or content
-3. **Sort Emails**: Click the sort buttons to organize by date, sender, or subject
-4. **Select Email**: Click on any email to view its details
-5. **Process with AI**: Click "Process with AI" to extract and format the email content
-6. **Toggle Views**: Use "Show AI Summary" / "Show Original" to switch between processed and original content
+1. **Upload CSV**: Click "Upload CSV File" or drag-and-drop your email export file
+2. **Browse Emails**: View the list of emails loaded from your CSV file
+3. **Search Emails**: Use the search bar to filter emails by sender, subject, or content
+4. **Sort Emails**: Click the sort buttons to organize by date, sender, or subject
+5. **Select Email**: Click on any email to view its details
+6. **Process with AI**: Click "Process with AI" to extract and format the email content
+7. **Toggle Views**: Use "Show AI Summary" / "Show Original" to switch between processed and original content
 
 ## Project Structure
 
