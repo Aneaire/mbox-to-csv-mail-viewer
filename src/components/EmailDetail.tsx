@@ -120,7 +120,7 @@ export function EmailDetail({ email, onBack, onProcessEmail }: EmailDetailProps)
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-white dark:bg-gray-800">
+    <div className="h-full flex flex-col bg-white dark:bg-gray-800">
       <div className="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 shadow-sm">
         <div className="flex items-center gap-4 mb-4">
           <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Email Details</h1>
@@ -175,7 +175,7 @@ export function EmailDetail({ email, onBack, onProcessEmail }: EmailDetailProps)
         </div>
       </div>
 
-      <div className="flex-1 p-6 overflow-y-auto bg-gray-50 dark:bg-gray-900">
+      <div className="flex-1 p-6 overflow-y-auto bg-gray-50 dark:bg-gray-900 min-h-0">
         <Card className="shadow-lg">
           <CardHeader className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
             <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">

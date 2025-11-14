@@ -118,7 +118,7 @@ function App() {
         </div>
       ) : (
         <div className="flex w-full h-screen">
-          <div className="sticky top-0 h-screen w-80 flex-shrink-0">
+          <div className="h-screen w-96 flex-shrink-0">
             <EmailList
               emails={emails}
               selectedEmail={selectedEmail}
@@ -127,7 +127,7 @@ function App() {
               onUploadClick={handleShowUpload}
             />
           </div>
-          <div className="flex-1 min-h-0 overflow-auto">
+          <div className="flex-1 h-screen overflow-hidden">
             {selectedEmail ? (
               <EmailDetail
                 email={selectedEmail}

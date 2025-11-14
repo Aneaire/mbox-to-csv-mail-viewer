@@ -57,7 +57,7 @@ export function EmailList({ emails, selectedEmail, onEmailSelect, onMarkAsRead, 
   };
 
   return (
-    <div className="w-full max-w-md border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 flex flex-col m-0">
+    <div className="w-full h-full border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 flex flex-col">
       <div className="p-6 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
