@@ -38,6 +38,8 @@ export function EmailDetail({ email, onBack, onProcessEmail }: EmailDetailProps)
         setProcessedEmail({ ...email });
         setIsAutoProcessing(true);
       }
+    } else {
+      setIsAutoProcessing(false);
     }
   }, [email]);
 
@@ -184,7 +186,7 @@ export function EmailDetail({ email, onBack, onProcessEmail }: EmailDetailProps)
             </CardTitle>
           </CardHeader>
           <CardContent className="bg-white dark:bg-gray-800">
-            {isAutoProcessing && (
+            {isAutoProcessing ? (
               <div className="flex items-center justify-center py-8">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
@@ -193,36 +195,36 @@ export function EmailDetail({ email, onBack, onProcessEmail }: EmailDetailProps)
                   </p>
                 </div>
               </div>
-            )}
-            
-            {!isAutoProcessing && (
-              <div className="prose prose-sm max-w-none">
-                <div className="whitespace-pre-wrap text-sm leading-relaxed text-gray-900 dark:text-white p-4">
-                  {isValidBody(displayBody) ? displayBody : (
-                    <div className="text-center py-8">
-                      <p className="text-gray-500 dark:text-gray-400 italic">
-                        Email body content is not available or contains unreadable data.
-                      </p>
-                      <p className="text-sm text-gray-400 dark:text-gray-500 mt-2">
-                        This might be due to encoding issues or email containing only HTML/CSS content.
-                      </p>
-                    </div>
-                  )}
+            ) : (
+              <>
+                <div className="prose prose-sm max-w-none">
+                  <div className="whitespace-pre-wrap text-sm leading-relaxed text-gray-900 dark:text-white p-4">
+                    {isValidBody(displayBody) ? displayBody : (
+                      <div className="text-center py-8">
+                        <p className="text-gray-500 dark:text-gray-400 italic">
+                          Email body content is not available or contains unreadable data.
+                        </p>
+                        <p className="text-sm text-gray-400 dark:text-gray-500 mt-2">
+                          This might be due to encoding issues or email containing only HTML/CSS content.
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
-            
-            {processedEmail?.processedBody && !showOriginal && !isAutoProcessing && (
-              <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                  AI Processing Summary
-                </h4>
-                <p className="text-sm text-blue-800 dark:text-blue-200 leading-relaxed">
-                  This email has been processed by AI to extract the main message and present it in a more readable format. 
-                  The AI has identified key points and organized the content for better comprehension.
-                </p>
-              </div>
+                
+                {processedEmail?.processedBody && !showOriginal && (
+                  <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                    <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2 flex items-center gap-2">
+                      <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                      AI Processing Summary
+                    </h4>
+                    <p className="text-sm text-blue-800 dark:text-blue-200 leading-relaxed">
+                      This email has been processed by AI to extract the main message and present it in a more readable format. 
+                      The AI has identified key points and organized the content for better comprehension.
+                    </p>
+                  </div>
+                )}
+              </>
             )}
           </CardContent>
         </Card>
