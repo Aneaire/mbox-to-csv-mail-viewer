@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader } from '../components/ui/card.js';
 import { Button } from '../components/ui/button.js';
-import { Mail, Star, Archive, Trash2, Search, Upload } from 'lucide-react';
+import { Mail, Star, Archive, Trash2, Search, Upload, Brain } from 'lucide-react';
 
 interface EmailListProps {
   emails: any[];
@@ -146,6 +146,11 @@ export function EmailList({ emails, selectedEmail, onEmailSelect, onMarkAsRead, 
                 <div className="flex items-center gap-1 ml-2">
                   {email.hasAttachments && (
                     <div className="w-2 h-2 bg-orange-500 rounded-full mr-1" title="Has attachments"></div>
+                  )}
+                  {email.processedBody && (
+                    <div className="w-2 h-2 bg-green-500 rounded-full mr-1" title="AI processed">
+                      <Brain className="h-3 w-3 text-white" />
+                    </div>
                   )}
                   <Button variant="ghost" size="icon" className="h-6 w-6">
                     <Star className="h-4 w-4" />

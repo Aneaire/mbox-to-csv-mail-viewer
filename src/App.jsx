@@ -16,8 +16,25 @@ function App() {
     // Don't auto-load emails on startup - wait for user upload
   }, []);
 
-  const handleEmailSelect = (email) => {
+  const handleEmailSelect = async (email) => {
     setSelectedEmail(email);
+    
+    // Auto-process with AI if not already processed
+    if (email && !email.processedBody) {
+      try {
+        const processed = await geminiService.processEmailBody(email);
+        setSelectedEmail(prev => prev?.id === email.id ? { ...prev, ...processed } : prev);
+        
+        // Also update the email in the emails list to mark it as processed
+        setEmails(prevEmails =>
+          prevEmails.map(e =>
+            e.id === email.id ? { ...e, ...processed } : e
+          )
+        );
+      } catch (error) {
+        console.error('Auto-processing email failed:', error);
+      }
+    }
   };
 
   const handleMarkAsRead = (emailId) => {
