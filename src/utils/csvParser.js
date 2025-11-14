@@ -134,9 +134,13 @@ export class CSVParser {
     if (lowerSubject.includes('zapier') || 
         lowerSubject.includes('error') || 
         lowerSubject.includes('alert') ||
+        lowerSubject.includes('filevine') ||
+        lowerSubject.includes('task assigned') ||
         lowerSender.includes('zapier') ||
+        lowerSender.includes('filevine') ||
         lowerBody.includes('zap') ||
-        lowerBody.includes('workflow')) {
+        lowerBody.includes('workflow') ||
+        lowerBody.includes('task')) {
       return 'work';
     }
     
