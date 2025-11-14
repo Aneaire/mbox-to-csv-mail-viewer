@@ -15,6 +15,17 @@ export class EmailDataService {
       return this.loadEmailsFromMockCSV();
     }
   }
+
+  static async loadEmailsFromCSVText(csvText, fileName) {
+    try {
+      const emails = CSVParser.parseCSV(csvText);
+      console.log(`Loaded ${emails.length} emails from ${fileName}`);
+      return emails;
+    } catch (error) {
+      console.error('Error parsing CSV:', error);
+      throw new Error('Failed to parse CSV file. Please check the file format.');
+    }
+  }
   
   static async loadEmailsFromMockCSV() {
     // For development, we'll create mock data based on the CSV structure
