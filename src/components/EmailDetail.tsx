@@ -3,6 +3,19 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card.
 import { Button } from '../components/ui/button.js';
 import { ArrowLeft, Mail, User, Calendar, Tag } from 'lucide-react';
 
+interface ProcessedEmail {
+  id: string;
+  sender: string;
+  senderEmail: string;
+  subject: string;
+  body: string;
+  timestamp: string;
+  read: boolean;
+  category?: string;
+  hasAttachments: boolean;
+  processedBody?: string;
+}
+
 interface EmailDetailProps {
   email: any | null;
   onBack: () => void;
@@ -59,7 +72,41 @@ export function EmailDetail({ email, onBack, onProcessEmail }: EmailDetailProps)
     );
   }
 
-  const displayBody = showOriginal ? email.body : (processedEmail?.processedBody || email.body);
+  const cleanBody = (body: string) => {
+    if (!body) return '';
+    
+    // Decode HTML entities
+    let cleaned = body.replace(/&nbsp;/g, ' ')
+                      .replace(/&amp;/g, '&')
+                      .replace(/&lt;/g, '<')
+                      .replace(/&gt;/g, '>')
+                      .replace(/&quot;/g, '"')
+                      .replace(/&#39;/g, "'")
+                      .replace(/&apos;/g, "'");
+    
+    // Remove any remaining HTML tags
+    cleaned = cleaned.replace(/<[^>]*>/g, '');
+    
+    // Clean up whitespace
+    cleaned = cleaned.replace(/\s+/g, ' ')
+                      .replace(/\n\s*\n/g, '\n')
+                      .trim();
+    
+    return cleaned;
+  };
+
+  const displayBody = showOriginal ? cleanBody(email.body) : (processedEmail?.processedBody || cleanBody(email.body));
+
+  const isValidBody = (body: string) => {
+    if (!body || body.trim().length === 0) return false;
+    
+    // Check if body contains mostly readable characters (not just symbols)
+    const readableChars = body.replace(/[^\w\s@.,!?;:'"-]/g, '').length;
+    const totalChars = body.length;
+    const readableRatio = readableChars / totalChars;
+    
+    return readableRatio > 0.3; // At least 30% readable characters
+  };
 
   return (
     <div className="flex-1 flex flex-col bg-white dark:bg-gray-800">
@@ -131,7 +178,16 @@ export function EmailDetail({ email, onBack, onProcessEmail }: EmailDetailProps)
           <CardContent className="bg-white dark:bg-gray-800">
             <div className="prose prose-sm max-w-none">
               <div className="whitespace-pre-wrap text-sm leading-relaxed text-gray-900 dark:text-white p-4">
-                {displayBody}
+                {isValidBody(displayBody) ? displayBody : (
+                  <div className="text-center py-8">
+                    <p className="text-gray-500 dark:text-gray-400 italic">
+                      Email body content is not available or contains unreadable data.
+                    </p>
+                    <p className="text-sm text-gray-400 dark:text-gray-500 mt-2">
+                      This might be due to encoding issues or the email containing only HTML/CSS content.
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
             
