@@ -50,6 +50,7 @@ This file provides guidelines for AI agents operating within this email viewer r
 - Validate email body content for readability
 
 ### Git Operations
-- **IMPORTANT**: Never commit or push changes without explicit user prompt
+- **CRITICAL**: NEVER run `git commit` or `git push` without explicit user prompt
 - Always wait for user instruction before running `git add`, `git commit`, or `git push`
 - Provide summary of changes before asking for commit/push permission
+- **DO NOT AUTOMATICALLY COMMIT** - even for small fixes or improvements

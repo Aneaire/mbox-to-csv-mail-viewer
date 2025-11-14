@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card.js';
 import { Button } from '../components/ui/button.js';
-import { ArrowLeft, Mail, User, Calendar, Tag } from 'lucide-react';
+import { Mail, User, Calendar, Tag } from 'lucide-react';
 
 interface ProcessedEmail {
   id: string;
@@ -26,7 +26,7 @@ export function EmailDetail({ email, onBack, onProcessEmail }: EmailDetailProps)
   const [processedEmail, setProcessedEmail] = useState<ProcessedEmail | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [showOriginal, setShowOriginal] = useState(false);
-  const [isAutoProcessing, setIsAutoProcessing] = useState(false);
+  const [isAutoProcessing, setIsAutoProcessing] = useState(true); // Start with loading state
 
   useEffect(() => {
     if (email) {
@@ -35,8 +35,9 @@ export function EmailDetail({ email, onBack, onProcessEmail }: EmailDetailProps)
         setProcessedEmail(email);
         setIsAutoProcessing(false);
       } else {
-        setProcessedEmail({ ...email });
+        // Set loading state immediately before setting the email
         setIsAutoProcessing(true);
+        setProcessedEmail({ ...email });
       }
     } else {
       setIsAutoProcessing(false);
@@ -122,9 +123,6 @@ export function EmailDetail({ email, onBack, onProcessEmail }: EmailDetailProps)
     <div className="flex-1 flex flex-col bg-white dark:bg-gray-800">
       <div className="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 shadow-sm">
         <div className="flex items-center gap-4 mb-4">
-          <Button variant="ghost" size="icon" onClick={onBack}>
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
           <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Email Details</h1>
         </div>
         

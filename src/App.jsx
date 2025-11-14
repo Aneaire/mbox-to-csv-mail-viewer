@@ -116,31 +116,37 @@ function App() {
             </div>
           </div>
         </div>
-      ) : selectedEmail ? (
-        <EmailDetail
-          email={selectedEmail}
-          onBack={handleBackToList}
-          onProcessEmail={handleProcessEmail}
-        />
       ) : (
-        <div className="flex w-full">
-          <EmailList
-            emails={emails}
-            selectedEmail={selectedEmail}
-            onEmailSelect={handleEmailSelect}
-            onMarkAsRead={handleMarkAsRead}
-            onUploadClick={handleShowUpload}
-          />
-          <div className="flex-1 flex items-center justify-center">
-            <div className="text-center">
-              <Mail className="mx-auto h-16 w-16 text-gray-300 dark:text-gray-600 mb-4" />
-              <h3 className="text-lg font-medium text-gray-600 dark:text-gray-400 mb-2">
-                Select an Email
-              </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-500">
-                Choose an email from the list to view its details
-              </p>
-            </div>
+        <div className="flex w-full h-screen">
+          <div className="sticky top-0 h-screen w-80 flex-shrink-0">
+            <EmailList
+              emails={emails}
+              selectedEmail={selectedEmail}
+              onEmailSelect={handleEmailSelect}
+              onMarkAsRead={handleMarkAsRead}
+              onUploadClick={handleShowUpload}
+            />
+          </div>
+          <div className="flex-1 min-h-0 overflow-auto">
+            {selectedEmail ? (
+              <EmailDetail
+                email={selectedEmail}
+                onBack={handleBackToList}
+                onProcessEmail={handleProcessEmail}
+              />
+            ) : (
+              <div className="flex items-center justify-center h-full">
+                <div className="text-center">
+                  <Mail className="mx-auto h-16 w-16 text-gray-300 dark:text-gray-600 mb-4" />
+                  <h3 className="text-lg font-medium text-gray-600 dark:text-gray-400 mb-2">
+                    Select an Email
+                  </h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-500">
+                    Choose an email from the list to view its details
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
